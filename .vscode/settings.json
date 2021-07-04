@@ -1,0 +1,4 @@
+{
+    "git.ignoreLimitWarning": true,
+    "typescript.tsdk": "/Users/thomasglover/Desktop/ElevenFifty/Javascript-Library/RedBadge/Pickup-Finder/client/node_modules/typescript/lib"
+}
