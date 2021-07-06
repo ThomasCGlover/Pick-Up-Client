@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Register from './components/Auth/Register';
-import Login from './components/Auth/Login';
 import Auth from './components/Auth/Auth';
-// import SideNav from './components/Site/SideNav';
-
+import SideNav from './components/Site/SideNav';
 import {
   BrowserRouter as Router
 } from 'react-router-dom';
@@ -26,6 +22,21 @@ class App extends Component <Props, AppState>{
       this.updateToken = this.updateToken.bind(this);
   }
 
+  componentDidMount(){
+    if(localStorage.getItem('token')){
+      this.setState({
+        sessionToken: localStorage.getItem('token')
+      })
+    }
+  }
+
+  clearToken(){
+    localStorage.clear();
+    this.setState({
+      sessionToken: ''
+    })
+  }
+
   updateToken(newToken: string){
     localStorage.setItem('token', newToken)
     this.setState({
@@ -36,8 +47,10 @@ class App extends Component <Props, AppState>{
   render(){
   return (
     <div className="App">
-      <Auth updateToken={this.updateToken}/>
-      {/* <SideNav updateToken = {this.updateToken}/> */}
+      {/* <Auth updateToken={this.updateToken}/> */}
+      <Router >
+      <SideNav updateToken = {this.updateToken}/>
+      </Router>
     </div>
   );
 }

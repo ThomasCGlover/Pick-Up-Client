@@ -53,12 +53,16 @@ export default class Login extends Component<AcceptedProps, LoginState>{
     render(){
         return(
             <>
-                <form>
-                    <h1>Login</h1>
-                    <input placeholder="Username" type="text" onChange={this.handleUsernameInput.bind(this)} />
-                    <input placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
-                    <button onClick={this.handlesubmit.bind(this)}>Submit</button>
-                </form>
+            <div className="main">
+                <div className="mainDiv">
+                    <form>
+                        <h1>Login</h1>
+                        <input placeholder="Username" type="text" onChange={this.handleUsernameInput.bind(this)} />
+                        <input placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
+                        <button onClick={this.handlesubmit.bind(this)}>Submit</button>
+                    </form>
+                </div>
+            </div>
             </>
         )
     }
