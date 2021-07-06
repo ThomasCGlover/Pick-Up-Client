@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 
-type UserData = {
+type RegisterState = {
     username: string,
     password: string,
     role: string, 
 
 }
-// type AcceptedProps = {
-//     updateToken: (newToken: string)
-// }
-export default class Register extends Component<{}, UserData>{
-    constructor(props: UserData){
+type AcceptedProps = {
+    updateToken: (newToken: string) => void
+}
+
+export default class Register extends Component<AcceptedProps, RegisterState>{
+    constructor(props: AcceptedProps){
         super(props)
         this.state={
             username: '',
@@ -30,7 +31,7 @@ export default class Register extends Component<{}, UserData>{
         })
         .then((response) => response.json())
         .then((data) => {
-            // this.props.updateToken(data.sessionToken)
+            this.props.updateToken(data.sessionToken)
             console.log(data)
         })
     }
@@ -53,7 +54,7 @@ export default class Register extends Component<{}, UserData>{
         return(
             <>
                 <form>
-                    <h1>Register</h1>
+                    <h1>First Time? Register Here</h1>
                     <input placeholder="Username" type="text" onChange={this.handleUsernameInput.bind(this)} />
                     <input placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
