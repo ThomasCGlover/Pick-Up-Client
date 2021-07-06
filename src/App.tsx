@@ -1,26 +1,45 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Register from './components/Auth/Register';
 
-function App() {
+function App () {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Register />
     </div>
   );
 }
 
 export default App;
+
+// type Props = {}
+// type AppState = {
+//   sessionToken: string | null,
+//   newToken: 
+// }
+
+// class App extends Component <Props, AppState>{
+//     constructor(props: Props){
+//       super(props);
+//       this.state = {
+//         sessionToken: ('')
+//       }
+//       this.updateToken = this.updateToken.bind(this);
+//   }
+
+//   updateToken(newToken: string)(
+//     localStorage.setItem('token', newToken);
+//     this.setState({
+//       sessionToken: newToken
+//     }, () => console.log(this.state.sessionToken))
+//     )
+
+//   render(){
+//   return (
+//     <div className="App">
+//       <Register />
+//     </div>
+//   );
+// }
+// }
