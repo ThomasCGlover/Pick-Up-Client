@@ -11,7 +11,7 @@ type GameState = {
 
 }
 type AcceptedProps = {
-    // sessionToken: string
+    sessionToken: string | null,
 }
 
 export default class CreateGame extends Component<AcceptedProps, GameState>{
@@ -35,6 +35,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token
+            
             })
         })
         .then((response) => response.json())
@@ -81,7 +82,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         })
         
     }
-
+    // onChange={(e) => setState(this.state.city: e.target.value)}
     render(){
         return(
             <>
@@ -132,8 +133,8 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                         </Select>
                     <input placeholder="Address of Game" type="text" onChange={this.handleAddressInput.bind(this)} />
                     <input placeholder="# of Players Needed" type="text" onChange={this.handlePlayersInput.bind(this)} />
-                    <input placeholder="Time (e.g. '6pm')" type="text" onChange={this.handleTimeInput.bind(this)} />
-                    <input placeholder="Date (e.g. 'March 6th')" type="text" onChange={this.handleDateInput.bind(this)} />
+                    <input placeholder="Time (e.g. 6pm)" type="text" onChange={this.handleTimeInput.bind(this)} />
+                    <input placeholder="Date (e.g. July 7th)" type="text" onChange={this.handleDateInput.bind(this)} />
                     <InputLabel>Skill Preference</InputLabel>
                         <Select onChange={this.handleSkillInput.bind(this)}>
                             <MenuItem value='Casual'>Casual</MenuItem>

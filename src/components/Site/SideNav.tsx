@@ -10,7 +10,8 @@ import CreateGame from '../Game/CreateGame';
 
 
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+    updateToken: (newToken: string) => void,
+    sessionToken: string | null,
 }
 
 const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
@@ -27,7 +28,7 @@ const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
                 <Switch>
                     <Route exact path='/login'><Login updateToken={props.updateToken}/></Route>
                     <Route exact path='/register'><Register updateToken={props.updateToken}/></Route>
-                    <Route exact path='/creategame'><CreateGame /></Route>
+                    <Route exact path='/creategame'><CreateGame sessionToken={props.sessionToken}/></Route>
                 </Switch>
             </div>
         </div>

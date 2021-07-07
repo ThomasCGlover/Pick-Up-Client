@@ -19,8 +19,8 @@ body{
 
 .sidebar{
   display: flex;
-  background-color: #53565A;
-  margin-top: 10px;
+  margin-top: 15px;
+  height: 100vh;
 }
 
 ul{
@@ -32,16 +32,22 @@ ul{
   padding-left: 50px;
   padding-top: 15px;
   width: 20%;
-  background-color: #53565A;
+  background-color: #3E6680;
   color: white;
+  border: solid 3px maroon;
+  
 }
 
 .sidebar-list a{
   color: white;
   padding: 0;
+  text-decoration: none;
+  font-size: 4vh;
+  
 }
 
 .sidebar-route{
   flex: 1;
   padding: '00px';
+  margin: 0px;
 }
