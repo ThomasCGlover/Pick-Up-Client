@@ -21,7 +21,7 @@ class App extends Component <Props, AppState>{
         sessionToken: ''
       }
       this.updateToken = this.updateToken.bind(this);
-      this.viewConductor = this.viewConductor.bind(this);
+      // this.viewConductor = this.viewConductor.bind(this);
   }
 
   componentDidMount(){
@@ -34,9 +34,7 @@ class App extends Component <Props, AppState>{
 
   clearToken(){
     localStorage.clear();
-    this.setState({
-      sessionToken: ''
-    })
+    window.location.reload()
   }
 
   updateToken(newToken: string){
@@ -46,21 +44,17 @@ class App extends Component <Props, AppState>{
     }, () => console.log(this.state.sessionToken))
   }
 
-  viewConductor = () => {
-    return this.state.sessionToken === localStorage.getItem('token') ? <Router >
-    <SideNav sessionToken={this.state.sessionToken} updateToken={this.updateToken} /> </Router> : <Auth updateToken={this.updateToken}/>  
-  }
+  // viewConductor = () => {
+  //   return this.state.sessionToken === localStorage.getItem('token') ? <Router >
+  //   <SideNav sessionToken={this.state.sessionToken} updateToken={this.updateToken} /> </Router> : <Auth updateToken={this.updateToken}/>  
+  // }
   
 
   render(){
   return (
     <div className="App">
       <h1>Pick-Up Finder</h1>
-      {/* <Auth updateToken={this.updateToken}/> */}
-      {/* <Router >
-      <SideNav updateToken = {this.updateToken} sessionToken={this.state.sessionToken}/>
-      </Router> */}
-      <ProtectedViews updateToken = {this.updateToken} sessionToken={this.state.sessionToken}/>
+      <ProtectedViews updateToken = {this.updateToken} sessionToken={this.state.sessionToken} clearToken={this.clearToken}/>
     </div>
   );
 }

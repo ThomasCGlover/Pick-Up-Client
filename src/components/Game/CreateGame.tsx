@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Select, InputLabel, MenuItem} from '@material-ui/core';
+import { render } from '@testing-library/react';
 
 type GameState = {
     city: string,
@@ -40,9 +41,14 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         })
         .then((response) => response.json())
         .then((data) => {
-            
             console.log(data)
-        })
+            
+    
+
+                
+            }
+            
+        )
     }
 
     handleCityInput(e: any) {
