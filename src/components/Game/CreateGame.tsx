@@ -8,11 +8,13 @@ type GameState = {
     playersNeeded: number,
     time: string,
     date: string,
-    skillPref: string
+    skillPref: string,
+ 
 
 }
 type AcceptedProps = {
     sessionToken: string | null,
+    
 }
 
 export default class CreateGame extends Component<AcceptedProps, GameState>{
@@ -25,6 +27,8 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             time: '',
             date: '',
             skillPref: '',
+          
+
             
         }
     }
@@ -42,7 +46,6 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
-            
     
 
                 
@@ -140,7 +143,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                     <input placeholder="Address of Game" type="text" onChange={this.handleAddressInput.bind(this)} />
                     <input placeholder="# of Players Needed" type="text" onChange={this.handlePlayersInput.bind(this)} />
                     <input placeholder="Time (e.g. 6pm)" type="text" onChange={this.handleTimeInput.bind(this)} />
-                    <input placeholder="Date (e.g. July 7th)" type="text" onChange={this.handleDateInput.bind(this)} />
+                    <input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={this.handleDateInput.bind(this)} />
                     <InputLabel>Skill Preference</InputLabel>
                         <Select onChange={this.handleSkillInput.bind(this)}>
                             <MenuItem value='Casual'>Casual</MenuItem>
@@ -148,14 +151,25 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                         </Select>
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
                 </form>
+               
             </>
         )
     }
 }
 
+type DisplayProps = {
+    games: Array<object>,
+}
 
-
-
+class GameDisplay extends Component<DisplayProps> {
+    render(){
+        return(
+            <div>
+                
+            </div>
+        )
+    }
+}
 
 
 

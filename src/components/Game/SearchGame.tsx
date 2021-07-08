@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Select, InputLabel, MenuItem} from '@material-ui/core';
+import { Select, InputLabel, MenuItem} from '@material-ui/core';
+import { Card, Button, CardTitle, CardText } from 'reactstrap';
 
 type GameState = {
     city: string,
@@ -8,9 +9,8 @@ type GameState = {
     time: string,
     date: string,
     skillPref: string,
-    isSubmitted: boolean,
-    
-
+    games: any[],
+    // comments: any[]
 }
 type AcceptedProps = {
     sessionToken: string | null,
@@ -26,8 +26,8 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             time: '',
             date: '',
             skillPref: '',
-            isSubmitted: false,
-            
+            games: [],
+            // comments: []
         }
     }
     handlesubmit = (e:any) => {
@@ -37,31 +37,30 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token
-            
             })
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
+            console.log(this.state.city)
             this.setState({
-                isSubmitted: true
+                games: data,
+                // comments: data.comments
             })
-    
-            }
-            
-        )
+        })
     }
-
+    
     handleCityInput(e: any) {
         this.setState({
             city: e.target.value
         })
-        
     }
-
     
     // onChange={(e) => setState(this.state.city: e.target.value)}
     render(){
+        console.log(this.state)
+        const { games } = this.state;
+        // const { comments } = this.state;
+        
         return(
             <>
                 <form>
@@ -110,8 +109,31 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='West Lafayette'>West Lafayette</MenuItem>
                         </Select>
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
-                    
                 </form>
+
+                {games.length > 0 && (
+                    <div className="games-container">
+                        
+                        {games.map(game => (
+                            <div className="game">
+                                <div>
+                                    <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
+                                        <CardTitle tag="h2">{game.date}</CardTitle>
+                                        <CardText>{game.time}</CardText>
+                                        <CardText>{game.address}</CardText>
+                                        <CardText>Players Needed: {game.playersNeeded}</CardText>
+                                        <CardText>Skill Preference: {game.skillPref}</CardText> 
+                                        {/* {comments.map(comment => {
+                                            <CardText>{comment.content}</CardText>
+
+                                        })}                                     */}
+                                        <Button>Add Comment</Button>
+                                    </Card>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </>
         )
     }
