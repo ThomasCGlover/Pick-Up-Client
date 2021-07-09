@@ -8,6 +8,7 @@ import Login from '../Auth/Login';
 import Register from '../Auth/Register';
 import CreateGame from '../Game/CreateGame';
 import SearchGame from '../Game/SearchGame';
+import UserProfile from '../Profile/UserProfile';
 
 
 type AcceptedProps = {
@@ -34,7 +35,7 @@ const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
                 <Switch>
                     <Route exact path='/creategame'><CreateGame sessionToken={props.sessionToken}/></Route>
                     <Route exact path='/searchgames'><SearchGame sessionToken={props.sessionToken} /></Route>
-                    <Route exact path='/profile'></Route>  
+                    <Route exact path='/profile'><UserProfile sessionToken={props.sessionToken}/></Route>  
                 </Switch>
             </div>
         </div>

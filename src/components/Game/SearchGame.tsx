@@ -10,7 +10,7 @@ type GameState = {
     date: string,
     skillPref: string,
     games: any[],
-    // comments: any[]
+    comments: any[]
 }
 type AcceptedProps = {
     sessionToken: string | null,
@@ -27,7 +27,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             date: '',
             skillPref: '',
             games: [],
-            // comments: []
+            comments: []
         }
     }
     handlesubmit = (e:any) => {
@@ -41,7 +41,6 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(this.state.city)
             this.setState({
                 games: data,
                 // comments: data.comments
@@ -57,7 +56,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
     
     // onChange={(e) => setState(this.state.city: e.target.value)}
     render(){
-        console.log(this.state)
+        console.log(this.state.games)
         const { games } = this.state;
         // const { comments } = this.state;
         
@@ -118,15 +117,17 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                             <div className="game">
                                 <div>
                                     <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
-                                        <CardTitle tag="h2">{game.date}</CardTitle>
+                                        <CardTitle tag="h2">Game {game.id}</CardTitle>
+                                        <CardText tag="h4">{game.date}</CardText>
                                         <CardText>{game.time}</CardText>
                                         <CardText>{game.address}</CardText>
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
-                                        {/* {comments.map(comment => {
-                                            <CardText>{comment.content}</CardText>
+                                        {/* <CardText>{game.comments}</CardText> */}
+                                        {/* {game.comments.map(comment => {
+                                        <CardText>{comment.content}</CardText>  */}
 
-                                        })}                                     */}
+                                                                    
                                         <Button>Add Comment</Button>
                                     </Card>
                                 </div>

@@ -27,7 +27,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             time: '',
             date: '',
             skillPref: '',
-          
+        
 
             
         }
@@ -151,7 +151,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                         </Select>
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
                 </form>
-               
+            
             </>
         )
     }
