@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Select, InputLabel, MenuItem} from '@material-ui/core';
 import { Card, Button, CardTitle, CardText } from 'reactstrap';
+import CommentDisplay from './CommentDisplay';
 
 type GameState = {
     city: string,
@@ -46,6 +47,8 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                 // comments: data.comments
             })
         })
+
+
     }
     
     handleCityInput(e: any) {
@@ -124,17 +127,18 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
                                         {/* <CardText>{game.comments}</CardText> */}
-                                        {/* {game.comments.map(comment => {
-                                        <CardText>{comment.content}</CardText>  */}
-
-                                                                    
-                                        <Button>Add Comment</Button>
+                                        <CommentDisplay comments={game.comments}/>
                                     </Card>
                                 </div>
                             </div>
                         ))}
                     </div>
-                )}
+                )} 
+                {/* {games.length === 0 && (
+                    <div>
+                        <p>Sorry, there have been no games created yet in your city! Go to Create Game and be the first!</p>
+                    </div>
+                )} */}
             </>
         )
     }

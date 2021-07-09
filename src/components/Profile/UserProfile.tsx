@@ -72,6 +72,24 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             window.location.reload()
         })
     }
+
+    deleteComment = (id: number) => {
+        fetch(`http://localhost:3005/comment/delete/${id}`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        }).then(
+            (response) => response.json()
+        ).then((data) => {
+            this.setState({
+                comments: data,
+            })
+            window.location.reload()
+        })
+    }
+    
     
     render(){
         const {games} = this.state;
@@ -104,16 +122,15 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                 <h2>Your Comments</h2>
                 {this.state.comments.length > 0 && (
                     <div className="comments-container">
-                        
                         {this.state.comments.map(comment => (
-                            <div className="comment">
+                            <div className="comment" key={comment.id}>
                                 <div>
                                     <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
                                         <CardTitle tag="h4">Commented on Game {comment.GameId}</CardTitle>
                                         <CardText>{comment.content}</CardText>
                                         <CardText>{comment.address}</CardText>      
                                         <Button>Edit Comment</Button> 
-                                        <Button>Delete Comment</Button>             
+                                        <Button onClick={()=>this.deleteComment(comment.id)}>Delete Comment</Button>             
                                     </Card>
                                 </div>
                             </div>
