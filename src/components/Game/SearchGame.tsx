@@ -11,7 +11,11 @@ type GameState = {
     date: string,
     skillPref: string,
     games: any[],
-    comments: any[]
+    comments: any[],
+    commentInput: string,
+    GameId: number,
+    // newComment: string,
+    
 }
 type AcceptedProps = {
     sessionToken: string | null,
@@ -28,7 +32,11 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             date: '',
             skillPref: '',
             games: [],
-            comments: []
+            comments: [],
+            commentInput: '',
+            GameId: 0,
+            // newComment: ''
+            
         }
     }
     handlesubmit = (e:any) => {
@@ -47,10 +55,35 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                 // comments: data.comments
             })
         })
-
-
     }
-    
+
+
+    addComment = (GameId: number) => {
+        fetch(`http://localhost:3005/comment/add/${GameId}`, {
+            method: 'POST',
+            body: JSON.stringify({content: this.state.commentInput}),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // this.setState({
+            //     newComment: data,
+            //     // comments: data.comments
+            // })
+            console.log(data)
+        })
+    }
+
+
+    commentInput(e:any){
+        this.setState({
+            commentInput: e.target.value
+        })
+    }
+
     handleCityInput(e: any) {
         this.setState({
             city: e.target.value
@@ -117,7 +150,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                     <div className="games-container">
                         
                         {games.map(game => (
-                            <div className="game">
+                            <div className="game" key={game.id}>
                                 <div>
                                     <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
                                         <CardTitle tag="h2">Game {game.id}</CardTitle>
@@ -128,10 +161,13 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
                                         {/* <CardText>{game.comments}</CardText> */}
                                         <CommentDisplay comments={game.comments}/>
+                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" />
+                                        <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
                                     </Card>
                                 </div>
                             </div>
                         ))}
+                        
                     </div>
                 )} 
                 {/* {games.length === 0 && (

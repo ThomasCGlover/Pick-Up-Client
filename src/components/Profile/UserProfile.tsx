@@ -6,6 +6,8 @@ type ProfileState = {
     games: any[],
     comments: any[],
     id: number,
+    playersNeeded: any //getting type unknown error for some reason in the input onChange, changed to 'any' just to get it functional,
+    editCommentInput: string,
 }
 type AcceptedProps = {
     sessionToken: string | null,
@@ -17,7 +19,9 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         this.state={
             games: [],
             comments: [],
-            id: 0
+            id: 0,
+            playersNeeded: 0,
+            editCommentInput: ''
         }
     }
 
@@ -89,6 +93,46 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             window.location.reload()
         })
     }
+
+    editComment = (id: number) => {
+        fetch(`http://localhost:3005/comment/edit/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({content: this.state.editCommentInput}),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // this.setState({
+            //     newComment: data,
+            //     // comments: data.comments
+            // })
+            console.log(data)
+        })
+    }
+
+    updatePlayersNeeded = (id: number) => {
+        fetch(`http://localhost:3005/game/playersneeded/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                playersNeeded: this.state.playersNeeded
+            }),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        }).then(
+            (response) => response.json()
+        ).then((data) => {
+            this.setState({
+                playersNeeded: data,
+            })
+            window.location.reload()
+            
+        })
+    }
     
     
     render(){
@@ -110,8 +154,22 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                                         <CardText>{game.time}</CardText>
                                         <CardText>{game.address}</CardText>
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
-                                        <CardText>Skill Preference: {game.skillPref}</CardText>  
-                                        <Button>Edit Game</Button> 
+                                        <CardText>Skill Preference: {game.skillPref}</CardText>
+                                        {/* <input type="text" placeholder="Update Players Needed" onChange={(e)=>this.setState({playersNeeded: e.target.value})}/>   */}
+                                        <InputLabel>Update Players Needed</InputLabel>
+                                        <Select onChange={(e)=>this.setState({playersNeeded: e.target.value})}>
+                                            <MenuItem value='0'>0</MenuItem>
+                                            <MenuItem value='1'>1</MenuItem>
+                                            <MenuItem value='2'>2</MenuItem>
+                                            <MenuItem value='3'>3</MenuItem>
+                                            <MenuItem value='4'>4</MenuItem>
+                                            <MenuItem value='5'>5</MenuItem>
+                                            <MenuItem value='6'>6</MenuItem>
+                                            <MenuItem value='7'>7</MenuItem>
+                                            <MenuItem value='8'>8</MenuItem>
+                                            <MenuItem value='9'>9</MenuItem>
+                                        </Select>
+                                        <Button onClick={()=>this.updatePlayersNeeded(game.id)}>Update</Button> 
                                         <Button onClick={()=>this.deleteGame(game.id)}>Delete Game</Button>              
                                     </Card>
                                 </div>
@@ -126,10 +184,11 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                             <div className="comment" key={comment.id}>
                                 <div>
                                     <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
-                                        <CardTitle tag="h4">Commented on Game {comment.GameId}</CardTitle>
+                                        <CardTitle tag="h4">You Commented on Game {comment.GameId}...</CardTitle>
                                         <CardText>{comment.content}</CardText>
-                                        <CardText>{comment.address}</CardText>      
-                                        <Button>Edit Comment</Button> 
+                                        <CardText>{comment.address}</CardText>
+                                        <input placeholder="Change your comment" type="text" onChange={(e)=>this.setState({editCommentInput: e.target.value})}></input>      
+                                        <Button onClick={()=>this.editComment(comment.id)}>Change</Button> 
                                         <Button onClick={()=>this.deleteComment(comment.id)}>Delete Comment</Button>             
                                     </Card>
                                 </div>

@@ -141,7 +141,19 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='West Lafayette'>West Lafayette</MenuItem>
                         </Select>
                     <input placeholder="Address of Game" type="text" onChange={this.handleAddressInput.bind(this)} />
-                    <input placeholder="# of Players Needed" type="text" onChange={this.handlePlayersInput.bind(this)} />
+                    <InputLabel>Players Needed</InputLabel>
+                        <Select onChange={this.handlePlayersInput.bind(this)}>
+                            <MenuItem value='0'>0</MenuItem>
+                            <MenuItem value='1'>1</MenuItem>
+                            <MenuItem value='2'>2</MenuItem>
+                            <MenuItem value='3'>3</MenuItem>
+                            <MenuItem value='4'>4</MenuItem>
+                            <MenuItem value='5'>5</MenuItem>
+                            <MenuItem value='6'>6</MenuItem>
+                            <MenuItem value='7'>7</MenuItem>
+                            <MenuItem value='8'>8</MenuItem>
+                            <MenuItem value='9'>9</MenuItem>
+                        </Select>
                     <input placeholder="Time (e.g. 6pm)" type="text" onChange={this.handleTimeInput.bind(this)} />
                     <input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={this.handleDateInput.bind(this)} />
                     <InputLabel>Skill Preference</InputLabel>
