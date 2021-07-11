@@ -23,7 +23,10 @@ type AcceptedProps = {
     updateToken: (newToken: string) => void
 }
 
+
+
 const Auth: React.FunctionComponent<AcceptedProps> = (props) => {
+
         return(
             <>
             <div>

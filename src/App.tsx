@@ -7,6 +7,9 @@ import {
 } from 'react-router-dom';
 import ProtectedViews from './components/Auth/ProtectedViews';
 import hoop from './assets/hoop.png'
+import { render } from '@testing-library/react';
+import AdminDelete from './components/Auth/AdminDelete';
+
 
 
 type Props = {}
@@ -44,6 +47,8 @@ class App extends Component <Props, AppState>{
       sessionToken: newToken
     }, () => console.log(this.state.sessionToken))
   }
+
+
 
   // viewConductor = () => {
   //   return this.state.sessionToken === localStorage.getItem('token') ? <Router >
