@@ -9,6 +9,7 @@ type AcceptedProps = {
     updateToken: (newToken: string) => void,
     sessionToken: string | null, 
     clearToken: () => void,
+    
 }
 
 const ProtectedViews: React.FunctionComponent<AcceptedProps> = (props) => {

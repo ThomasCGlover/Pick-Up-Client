@@ -33,14 +33,14 @@ ul{
   padding-left: 50px;
   padding-top: 15px;
   width: 20%;
-  background-color: #FF934F;
-  color: white;
-  border: solid 3px slategray;
+  background-color: transparent;
+  color: #DFE2CF;
+  
   
 }
 
 .sidebar-list a{
-  color: white;
+  color: #DFE2CF;
   padding: 0;
   text-decoration: none;
   font-size: 4vh;

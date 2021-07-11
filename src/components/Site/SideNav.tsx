@@ -9,6 +9,7 @@ import Register from '../Auth/Register';
 import CreateGame from '../Game/CreateGame';
 import SearchGame from '../Game/SearchGame';
 import UserProfile from '../Profile/UserProfile';
+import AdminDelete from '../Auth/AdminDelete';
 
 
 type AcceptedProps = {
@@ -28,6 +29,7 @@ const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
                     <li><Link to='/profile'>Your Profile</Link></li>
                     {/* <li><Link to='/logout'><button onClick={props.clearToken} >Logout</button></Link></li> */}
                     <button onClick={props.clearToken} >Logout</button>
+                    <li><Link to='/admin'>admin</Link></li>
 
                 </ul>
             </div>
@@ -36,6 +38,7 @@ const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
                     <Route exact path='/creategame'><CreateGame sessionToken={props.sessionToken}/></Route>
                     <Route exact path='/searchgames'><SearchGame sessionToken={props.sessionToken} /></Route>
                     <Route exact path='/profile'><UserProfile sessionToken={props.sessionToken}/></Route>  
+                    <Route exact path='/admin'><AdminDelete sessionToken={props.sessionToken}/></Route>
                 </Switch>
             </div>
         </div>

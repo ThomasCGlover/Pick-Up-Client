@@ -69,10 +69,9 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
         })
         .then((response) => response.json())
         .then((data) => {
-            // this.setState({
-            //     newComment: data,
-            //     // comments: data.comments
-            // })
+            this.setState({
+                commentInput: ''
+            })
             console.log(data)
         })
     }
@@ -161,7 +160,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
                                         {/* <CardText>{game.comments}</CardText> */}
                                         <CommentDisplay comments={game.comments}/>
-                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" />
+                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
                                         <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
                                     </Card>
                                 </div>

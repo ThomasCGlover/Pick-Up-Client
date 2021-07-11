@@ -1,6 +1,35 @@
 import React, {Component} from 'react';
-import {Button, Select, InputLabel, MenuItem} from '@material-ui/core';
+import {Select, InputLabel, MenuItem} from '@material-ui/core';
 import { render } from '@testing-library/react';
+import styled from 'styled-components';
+
+const CreateTitle = styled.h1`
+    color: #DFE2CF;
+    font-size: 8vh;
+
+`
+const InputDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
+const Input = styled.input`
+    background-color: #DFE2CF;
+`
+
+const Label = styled.label`
+    color: #FF934F;
+
+`
+const Button = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 60vw;
+    height: 5vh;
+`
 
 type GameState = {
     city: string,
@@ -58,6 +87,8 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         )
     }
 
+
+    //created these three functions because Typescript is not recognizing the dropdown values as string
     handleCityInput(e: any) {
         this.setState({
             city: e.target.value
@@ -72,31 +103,21 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         
     }
 
-    handleDateInput(e: any) {
-        this.setState({
-            date: e.target.value
-        })
-        
-    }
     handleSkillInput(e: any) {
         this.setState({
             skillPref: e.target.value
         })
         
     }
-    handleAddressInput(e: any) {
-        this.setState({
-            address: e.target.value
-        })
-        
-    }
+ 
     // onChange={(e) => setState(this.state.city: e.target.value)}
     render(){
         return(
             <>
                 <form>
-                    <h1>Create a Game!</h1>
-                    <InputLabel>City</InputLabel>
+                    <CreateTitle>Create a game in your city!</CreateTitle>
+                    <InputDiv>
+                    <Label>City</Label>
                         <Select onChange={this.handleCityInput.bind(this)}>
                             <MenuItem value='Anderson'>Anderson</MenuItem>
                             <MenuItem value='Bloomington'>Bloomington</MenuItem>
@@ -139,8 +160,8 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='Westfield'>Westfield</MenuItem>
                             <MenuItem value='West Lafayette'>West Lafayette</MenuItem>
                         </Select>
-                    <input placeholder="Address of Game" type="text" onChange={this.handleAddressInput.bind(this)} />
-                    <InputLabel>Players Needed</InputLabel>
+                    <Input placeholder="Address of Game" type="text" onChange={(e)=>this.setState({address: e.target.value})} />
+                    <Label>Players Needed</Label>
                         <Select onChange={this.handlePlayersInput.bind(this)}>
                             <MenuItem value='0'>0</MenuItem>
                             <MenuItem value='1'>1</MenuItem>
@@ -153,14 +174,15 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='8'>8</MenuItem>
                             <MenuItem value='9'>9</MenuItem>
                         </Select>
-                    <input placeholder="Time (e.g. 6pm)" type="text" onChange={(e)=>this.setState({time: e.target.value})} />
-                    <input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={this.handleDateInput.bind(this)} />
-                    <InputLabel>Skill Preference</InputLabel>
+                    <Input placeholder="Time (e.g. 6pm)" type="text" onChange={(e)=>this.setState({time: e.target.value})} />
+                    <Input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={(e)=>this.setState({date: e.target.value})} />
+                    <Label>Skill Preference</Label>
                         <Select onChange={this.handleSkillInput.bind(this)}>
                             <MenuItem value='Casual'>Casual</MenuItem>
                             <MenuItem value='Competitive'>Competitive</MenuItem>
                         </Select>
-                    <button onClick={this.handlesubmit.bind(this)}>Submit</button>
+                        </InputDiv>
+                    <Button onClick={this.handlesubmit.bind(this)}>Submit</Button>
                 </form>
                 {this.state.message === true && (
                     <div>
