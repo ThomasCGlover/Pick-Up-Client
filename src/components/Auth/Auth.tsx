@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Register from './Register';
 import Login from './Login';
-import { render } from '@testing-library/react';
-import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import hoop from '../assets/hoop.png'
+
 
 const Info = styled.p`
     color: #DFE2CF;
