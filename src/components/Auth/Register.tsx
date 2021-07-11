@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import APIURL from '../helpers/environment';
 
 const Wrapper = styled.div`
     height: 25vh;
@@ -53,7 +54,7 @@ export default class Register extends Component<AcceptedProps, RegisterState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch('http://tcg-pickup-server.herokuapp.com/user/register', {
+        fetch(`${APIURL}/user/register`, {
             method: 'POST',
             body: JSON.stringify({username: this.state.username, password: this.state.password, role: this.state.role}),
             headers: new Headers({

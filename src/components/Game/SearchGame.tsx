@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Select, InputLabel, MenuItem} from '@material-ui/core';
 import { Card, Button, CardTitle, CardText } from 'reactstrap';
 import CommentDisplay from './CommentDisplay';
+import APIURL from '../helpers/environment';
 
 type GameState = {
     city: string,
@@ -41,7 +42,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch(`http://tcg-pickup-server.herokuapp.com/game/search/${this.state.city}`, {
+        fetch(`${APIURL}/game/search/${this.state.city}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
