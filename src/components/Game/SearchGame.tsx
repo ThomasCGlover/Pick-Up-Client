@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Button, Select, InputLabel, MenuItem} from '@material-ui/core';
-import { render } from '@testing-library/react';
+import { Select, InputLabel, MenuItem} from '@material-ui/core';
+import { Card, Button, CardTitle, CardText } from 'reactstrap';
+import CommentDisplay from './CommentDisplay';
 
 type GameState = {
     city: string,
@@ -9,16 +10,18 @@ type GameState = {
     time: string,
     date: string,
     skillPref: string,
-    message: boolean,
- 
-
+    games: any[],
+    comments: any[],
+    commentInput: string,
+    GameId: number,
+    // newComment: string,
+    
 }
 type AcceptedProps = {
     sessionToken: string | null,
-    
 }
 
-export default class CreateGame extends Component<AcceptedProps, GameState>{
+export default class SearchGame extends Component<AcceptedProps, GameState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
@@ -28,75 +31,76 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             time: '',
             date: '',
             skillPref: '',
-            message: false,
-        
-
+            games: [],
+            comments: [],
+            commentInput: '',
+            GameId: 0,
+            // newComment: ''
             
         }
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch('http://tcg-pickup-server.herokuapp.com/game/create', {
-            method: 'POST',
-            body: JSON.stringify({city: this.state.city, address: this.state.address, playersNeeded: this.state.playersNeeded, time: this.state.time, date: this.state.date, skillPref: this.state.skillPref}),
+        fetch(`http://tcg-pickup-server.herokuapp.com/game/search/${this.state.city}`, {
+            method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token
-            
             })
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             this.setState({
-                message: true
+                games: data,
+                // comments: data.comments
             })
+        })
+    }
 
-            }
 
-            
-        )
+    addComment = (GameId: number) => {
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
+            method: 'POST',
+            body: JSON.stringify({content: this.state.commentInput}),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            // this.setState({
+            //     newComment: data,
+            //     // comments: data.comments
+            // })
+            console.log(data)
+        })
+    }
+
+
+    commentInput(e:any){
+        this.setState({
+            commentInput: e.target.value
+        })
     }
 
     handleCityInput(e: any) {
         this.setState({
             city: e.target.value
         })
-        
     }
-
-    handlePlayersInput(e: any) {
-        this.setState({
-            playersNeeded: e.target.value
-        })
-        
-    }
-
-    handleDateInput(e: any) {
-        this.setState({
-            date: e.target.value
-        })
-        
-    }
-    handleSkillInput(e: any) {
-        this.setState({
-            skillPref: e.target.value
-        })
-        
-    }
-    handleAddressInput(e: any) {
-        this.setState({
-            address: e.target.value
-        })
-        
-    }
+    
     // onChange={(e) => setState(this.state.city: e.target.value)}
     render(){
+        console.log(this.state.games)
+        const { games } = this.state;
+        // const { comments } = this.state;
+        
         return(
             <>
                 <form>
-                    <h1>Create a Game!</h1>
-                    <InputLabel>City</InputLabel>
+                    <h1>Search for a game near you!</h1>
+                    <InputLabel>Choose your city</InputLabel>
                         <Select onChange={this.handleCityInput.bind(this)}>
                             <MenuItem value='Anderson'>Anderson</MenuItem>
                             <MenuItem value='Bloomington'>Bloomington</MenuItem>
@@ -139,53 +143,39 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='Westfield'>Westfield</MenuItem>
                             <MenuItem value='West Lafayette'>West Lafayette</MenuItem>
                         </Select>
-                    <input placeholder="Address of Game" type="text" onChange={this.handleAddressInput.bind(this)} />
-                    <InputLabel>Players Needed</InputLabel>
-                        <Select onChange={this.handlePlayersInput.bind(this)}>
-                            <MenuItem value='0'>0</MenuItem>
-                            <MenuItem value='1'>1</MenuItem>
-                            <MenuItem value='2'>2</MenuItem>
-                            <MenuItem value='3'>3</MenuItem>
-                            <MenuItem value='4'>4</MenuItem>
-                            <MenuItem value='5'>5</MenuItem>
-                            <MenuItem value='6'>6</MenuItem>
-                            <MenuItem value='7'>7</MenuItem>
-                            <MenuItem value='8'>8</MenuItem>
-                            <MenuItem value='9'>9</MenuItem>
-                        </Select>
-                    <input placeholder="Time (e.g. 6pm)" type="text" onChange={(e)=>this.setState({time: e.target.value})} />
-                    <input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={this.handleDateInput.bind(this)} />
-                    <InputLabel>Skill Preference</InputLabel>
-                        <Select onChange={this.handleSkillInput.bind(this)}>
-                            <MenuItem value='Casual'>Casual</MenuItem>
-                            <MenuItem value='Competitive'>Competitive</MenuItem>
-                        </Select>
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
                 </form>
-                {this.state.message === true && (
-                    <div>
-                        <p>Successfully created game! It is now available in your user profile!</p>
+
+                {games.length > 0 && (
+                    <div className="games-container">
+                        
+                        {games.map(game => (
+                            <div className="game" key={game.id}>
+                                <div>
+                                    <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
+                                        <CardTitle tag="h2">Game {game.id}</CardTitle>
+                                        <CardText tag="h4">{game.date}</CardText>
+                                        <CardText>{game.time}</CardText>
+                                        <CardText>{game.address}</CardText>
+                                        <CardText>Players Needed: {game.playersNeeded}</CardText>
+                                        <CardText>Skill Preference: {game.skillPref}</CardText> 
+                                        {/* <CardText>{game.comments}</CardText> */}
+                                        <CommentDisplay comments={game.comments}/>
+                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" />
+                                        <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
+                                    </Card>
+                                </div>
+                            </div>
+                        ))}
+                        
                     </div>
-                )}
-            
+                )} 
+                {/* {games.length === 0 && (
+                    <div>
+                        <p>Sorry, there have been no games created yet in your city! Go to Create Game and be the first!</p>
+                    </div>
+                )} */}
             </>
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
