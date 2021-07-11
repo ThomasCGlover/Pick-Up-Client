@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Form, Input, Label, Button} from 'reactstrap';
+import APIURL from '../helpers/environment';
+
 type AdminData = {
     userId: number,
     
@@ -16,7 +18,7 @@ export default class AdminDelete extends Component<AcceptedProps, AdminData> {
         }
     }
     handleDelete = (userId: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/user/delete/admin/${userId}`, {
+        fetch(`${APIURL}/user/delete/admin/${userId}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

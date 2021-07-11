@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Select, InputLabel, MenuItem} from '@material-ui/core';
 import { Card, Button, CardTitle, CardText } from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 type ProfileState = {
     games: any[],
@@ -26,7 +27,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     componentWillMount(){
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/mycomments`, {
+        fetch(`${APIURL}/comment/mycomments`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         })
 
 
-        fetch(`http://tcg-pickup-server.herokuapp.com/game/mygames`, {
+        fetch(`${APIURL}/game/mygames`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     deleteGame = (id: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/game/delete/${id}`, {
+        fetch(`${APIURL}/game/delete/${id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     deleteComment = (id: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/delete/${id}`, {
+        fetch(`${APIURL}/comment/delete/${id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     editComment = (id: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/edit/${id}`, {
+        fetch(`${APIURL}/comment/edit/${id}`, {
             method: 'PUT',
             body: JSON.stringify({content: this.state.editCommentInput}),
             headers: new Headers({
@@ -115,7 +116,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     updatePlayersNeeded = (id: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/game/playersneeded/${id}`, {
+        fetch(`${APIURL}/game/playersneeded/${id}`, {
             method: 'PUT',
             body: JSON.stringify({
                 playersNeeded: this.state.playersNeeded

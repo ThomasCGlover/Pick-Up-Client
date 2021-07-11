@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import APIURL from '../helpers/environment';
 
 
 const Wrapper = styled.div`
@@ -72,7 +73,7 @@ export default class Login extends Component<AcceptedProps, LoginState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch('http://tcg-pickup-server.herokuapp.com/user/login', {
+        fetch(`${APIURL}/user/login`, {
             method: 'POST',
             body: JSON.stringify({username: this.state.username, password: this.state.password}),
             headers: new Headers({

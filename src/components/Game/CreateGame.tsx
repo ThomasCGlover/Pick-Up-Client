@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Select, InputLabel, MenuItem} from '@material-ui/core';
 import { render } from '@testing-library/react';
 import styled from 'styled-components';
+import APIURL from '../helpers/environment';
 
 const CreateTitle = styled.h1`
     color: #DFE2CF;
@@ -65,7 +66,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch('http://tcg-pickup-server.herokuapp.com/game/create', {
+        fetch(`${APIURL}/game/create`, {
             method: 'POST',
             body: JSON.stringify({city: this.state.city, address: this.state.address, playersNeeded: this.state.playersNeeded, time: this.state.time, date: this.state.date, skillPref: this.state.skillPref}),
             headers: new Headers({
