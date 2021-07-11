@@ -41,7 +41,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch(`http://localhost:3005/game/search/${this.state.city}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/game/search/${this.state.city}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
 
 
     addComment = (GameId: number) => {
-        fetch(`http://localhost:3005/comment/add/${GameId}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
             method: 'POST',
             body: JSON.stringify({content: this.state.commentInput}),
             headers: new Headers({

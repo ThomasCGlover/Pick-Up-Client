@@ -9,6 +9,7 @@ type GameState = {
     time: string,
     date: string,
     skillPref: string,
+    message: boolean,
  
 
 }
@@ -27,6 +28,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             time: '',
             date: '',
             skillPref: '',
+            message: false,
         
 
             
@@ -34,7 +36,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
-        fetch('http://localhost:3005/game/create', {
+        fetch('http://tcg-pickup-server.herokuapp.com/game/create', {
             method: 'POST',
             body: JSON.stringify({city: this.state.city, address: this.state.address, playersNeeded: this.state.playersNeeded, time: this.state.time, date: this.state.date, skillPref: this.state.skillPref}),
             headers: new Headers({
@@ -46,10 +48,12 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
-    
+            this.setState({
+                message: true
+            })
 
-                
             }
+
             
         )
     }
@@ -67,12 +71,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
         })
         
     }
-    handleTimeInput(e: any) {
-        this.setState({
-            time: e.target.value
-        })
-        
-    }
+
     handleDateInput(e: any) {
         this.setState({
             date: e.target.value
@@ -154,7 +153,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                             <MenuItem value='8'>8</MenuItem>
                             <MenuItem value='9'>9</MenuItem>
                         </Select>
-                    <input placeholder="Time (e.g. 6pm)" type="text" onChange={this.handleTimeInput.bind(this)} />
+                    <input placeholder="Time (e.g. 6pm)" type="text" onChange={(e)=>this.setState({time: e.target.value})} />
                     <input placeholder="Date (e.g. July 7th 2021)" type="text" onChange={this.handleDateInput.bind(this)} />
                     <InputLabel>Skill Preference</InputLabel>
                         <Select onChange={this.handleSkillInput.bind(this)}>
@@ -163,25 +162,17 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                         </Select>
                     <button onClick={this.handlesubmit.bind(this)}>Submit</button>
                 </form>
+                {this.state.message === true && (
+                    <div>
+                        <p>Successfully created game! It is now available in your user profile!</p>
+                    </div>
+                )}
             
             </>
         )
     }
 }
 
-type DisplayProps = {
-    games: Array<object>,
-}
-
-class GameDisplay extends Component<DisplayProps> {
-    render(){
-        return(
-            <div>
-                
-            </div>
-        )
-    }
-}
 
 
 

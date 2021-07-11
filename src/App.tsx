@@ -6,6 +6,7 @@ import {
   BrowserRouter as Router
 } from 'react-router-dom';
 import ProtectedViews from './components/Auth/ProtectedViews';
+import hoop from './assets/hoop.png'
 
 
 type Props = {}
@@ -34,7 +35,7 @@ class App extends Component <Props, AppState>{
 
   clearToken(){
     localStorage.clear();
-    window.location.reload()
+    window.location.reload();
   }
 
   updateToken(newToken: string){
@@ -53,7 +54,7 @@ class App extends Component <Props, AppState>{
   render(){
   return (
     <div className="App">
-      <h1>Pick-Up Finder</h1>
+      <h1 className="title">Pick-Up Finder</h1>
       <ProtectedViews updateToken = {this.updateToken} sessionToken={this.state.sessionToken} clearToken={this.clearToken}/>
     </div>
   );

@@ -26,7 +26,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     componentWillMount(){
-        fetch(`http://localhost:3005/comment/mycomments`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/mycomments`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         })
 
 
-        fetch(`http://localhost:3005/game/mygames`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/game/mygames`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     deleteGame = (id: number) => {
-        fetch(`http://localhost:3005/game/delete/${id}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/game/delete/${id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     deleteComment = (id: number) => {
-        fetch(`http://localhost:3005/comment/delete/${id}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/delete/${id}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     }
 
     editComment = (id: number) => {
-        fetch(`http://localhost:3005/comment/edit/${id}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/edit/${id}`, {
             method: 'PUT',
             body: JSON.stringify({content: this.state.editCommentInput}),
             headers: new Headers({
@@ -110,11 +110,12 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             //     // comments: data.comments
             // })
             console.log(data)
+            window.location.reload()
         })
     }
 
     updatePlayersNeeded = (id: number) => {
-        fetch(`http://localhost:3005/game/playersneeded/${id}`, {
+        fetch(`http://tcg-pickup-server.herokuapp.com/game/playersneeded/${id}`, {
             method: 'PUT',
             body: JSON.stringify({
                 playersNeeded: this.state.playersNeeded
