@@ -4,6 +4,11 @@ import { Card, CardTitle, CardText } from 'reactstrap';
 import CommentDisplay from './CommentDisplay';
 import APIURL from '../helpers/environment';
 import styled from 'styled-components';
+import{
+    Route, 
+    Link, 
+    Switch
+} from 'react-router-dom';
 
 const Heading = styled.h1`
     color: #DFE2CF;
@@ -96,6 +101,24 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                 games: data,
                 // comments: data.comments
             })
+
+        })
+    }
+
+    fetchGames = () => {
+        fetch(`${APIURL}/game/search/${this.state.city}`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({
+                games: data,
+                // comments: data.comments
+            })
         })
     }
 
@@ -116,6 +139,8 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                 commentInput: ''
             })
             console.log(data)
+            this.fetchGames();
+            
         })
     }
 
@@ -196,7 +221,6 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
 
                 {games.length > 0 && (
                     <div className="games-container">
-                        
                         {games.map(game => (
                             <div className="game" key={game.id}>
                                 <div>
@@ -208,9 +232,15 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
                                         {/* <CardText>{game.comments}</CardText> */}
+                                        {/* <Switch>
+                                        <Route exact path='/comments'><CommentDisplay comments={game.comments}/></Route>
+                                        </Switch> */}
                                         <CommentDisplay comments={game.comments}/>
                                         <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
+                                        {/* <Link to='/comments'> */}
                                         <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
+                                        {/* </Link> */}
+                                    
                                     </Card>
                                 </div>
                             </div>

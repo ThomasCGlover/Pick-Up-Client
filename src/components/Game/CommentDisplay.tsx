@@ -17,7 +17,6 @@ const CommentDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
                 <CardText tag="h4">{comment.content}</CardText>     
             </div>
         ))}
-        {/* <Button>Add Comment</Button> */}
     </div>
 )
 }

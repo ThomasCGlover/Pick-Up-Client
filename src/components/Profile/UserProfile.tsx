@@ -70,6 +70,40 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         
     }
 
+    getGames = () => {
+        fetch(`${APIURL}/game/mygames`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            
+            this.setState({
+                games: data
+            })
+        })
+    }
+
+    getComments = () => {
+        fetch(`${APIURL}/comment/mycomments`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            
+            this.setState({
+                comments: data.userComments
+            })
+        })
+    }
+
     deleteGame = (id: number) => {
         fetch(`${APIURL}/game/delete/${id}`, {
             method: 'DELETE',
@@ -83,7 +117,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             this.setState({
                 games: data,
             })
-            window.location.reload()
+            this.getGames();
         })
     }
 
@@ -118,8 +152,10 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         ).then((data) => {
             this.setState({
                 comments: data,
+                editCommentInput: ''
             })
-            window.location.reload()
+            
+            this.getComments();
         })
     }
 
@@ -139,7 +175,8 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             //     // comments: data.comments
             // })
             console.log(data)
-            window.location.reload()
+
+            this.getComments()
         })
     }
 
@@ -159,7 +196,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             this.setState({
                 playersNeeded: data,
             })
-            window.location.reload()
+            this.getGames()
             
         })
     }
