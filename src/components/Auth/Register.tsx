@@ -64,6 +64,8 @@ export default class Register extends Component<AcceptedProps, RegisterState>{
         .then((response) => response.json())
         .then((data) => {
             this.props.updateToken(data.sessionToken)
+            localStorage.setItem('username', data.user.username)
+            localStorage.setItem('role', data.user.role)
             console.log(data)
         })
     }

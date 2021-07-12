@@ -7,7 +7,6 @@ type AcceptedProps = {
 
 
 const CommentDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
-
     return(
 
         <div className="comments-container">

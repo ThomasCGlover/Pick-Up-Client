@@ -9,8 +9,6 @@ const Wrapper = styled.div`
     max-width: 95vw;
     color: #FF934F;
     
-    
-
 `
 
 const MainDiv = styled.div`
@@ -50,8 +48,8 @@ const Input = styled.input`
 
 
 type LoginState = {
-    username: string,
-    password: string,
+    username: string | null,
+    password: string | null,
     role: string,
     
 
@@ -64,8 +62,8 @@ export default class Login extends Component<AcceptedProps, LoginState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
-            username: '',
-            password: '',
+            username: null,
+            password: null,
             role: '',
             
             
@@ -82,10 +80,10 @@ export default class Login extends Component<AcceptedProps, LoginState>{
         })
         .then((response) => response.json())
         .then((data) => {
+            console.log(data)
             this.props.updateToken(data.sessionToken)
-            // this.setState({
-            //     // role: data.user.role
-            // })
+            localStorage.setItem('username', data.user.username)
+            localStorage.setItem('role', data.user.role)
         })
     }
 

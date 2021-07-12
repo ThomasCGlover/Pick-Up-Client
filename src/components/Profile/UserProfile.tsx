@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import { Select, InputLabel, MenuItem} from '@material-ui/core';
 import { Card, Button, CardTitle, CardText } from 'reactstrap';
 import APIURL from '../helpers/environment';
+import styled from 'styled-components';
+import CommentDisplay from '../Game/CommentDisplay';
+
+const Heading = styled.h1`
+    color: #FF934F;
+`
+
 
 type ProfileState = {
     games: any[],
@@ -9,6 +16,7 @@ type ProfileState = {
     id: number,
     playersNeeded: any //getting type unknown error for some reason in the input onChange, changed to 'any' just to get it functional,
     editCommentInput: string,
+    commentInput: string,
 }
 type AcceptedProps = {
     sessionToken: string | null,
@@ -22,7 +30,8 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
             comments: [],
             id: 0,
             playersNeeded: 0,
-            editCommentInput: ''
+            editCommentInput: '',
+            commentInput: ''
         }
     }
 
@@ -75,6 +84,25 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                 games: data,
             })
             window.location.reload()
+        })
+    }
+
+    addComment = (GameId: number) => {
+        
+        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
+            method: 'POST',
+            body: JSON.stringify({content: this.state.commentInput}),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({
+                commentInput: ''
+            })
+            console.log(data)
         })
     }
 
@@ -142,7 +170,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         
         return(
             <div>
-                <h2>Your Games</h2>
+                <Heading>Your Games:</Heading>
                 {this.state.games.length > 0 && (
                     <div className="games-container">
                         
@@ -157,6 +185,9 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                                         <CardText>{game.address}</CardText>
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText>
+                                        <CommentDisplay comments={game.comments}/>
+                                        <input onChange={(e)=>this.setState({commentInput: e.target.value})} type="text" placeholder="Add Comment" value={this.state.commentInput} />
+                                        <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
                                         {/* <input type="text" placeholder="Update Players Needed" onChange={(e)=>this.setState({playersNeeded: e.target.value})}/>   */}
                                         <InputLabel>Update Players Needed</InputLabel>
                                         <Select onChange={(e)=>this.setState({playersNeeded: e.target.value})}>
@@ -179,7 +210,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                         ))}
                     </div>
                 )}
-                <h2>Your Comments</h2>
+                <Heading>Your Comments:</Heading>
                 {this.state.comments.length > 0 && (
                     <div className="comments-container">
                         {this.state.comments.map(comment => (
