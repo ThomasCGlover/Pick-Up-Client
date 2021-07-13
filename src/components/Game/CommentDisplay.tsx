@@ -15,7 +15,7 @@ const CommentDisplay: React.FunctionComponent<AcceptedProps> = (props) => {
             <h3 style={{color: '#3D0814', fontSize: '4vh'}}>Comments</h3>
             {props.comments.map(comment => (
             <div className="comment">
-                <CardText style={{color: '#3D0814', fontSize: '3vh'}} tag="h4">{comment.content}</CardText>     
+                <CardText style={{color: '#3D0814', fontSize: '3vh'}} tag="h4">{comment.username}: {comment.content}</CardText>     
             </div>
         ))}
     </div>

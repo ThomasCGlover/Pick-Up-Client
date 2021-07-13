@@ -85,7 +85,6 @@ type GameState = {
 type AcceptedProps = {
     sessionToken: string | null,
 }
-const displayedName = localStorage.getItem('username');
 
 export default class SearchGame extends Component<AcceptedProps, GameState>{
     constructor(props: AcceptedProps){
@@ -144,9 +143,9 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
 
     addComment = (GameId: number) => {
         
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
+        fetch(`${APIURL}/comment/add/${GameId}`, {
             method: 'POST',
-            body: JSON.stringify({content: this.state.commentInput}),
+            body: JSON.stringify({content: this.state.commentInput}), //username: displayedName
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token

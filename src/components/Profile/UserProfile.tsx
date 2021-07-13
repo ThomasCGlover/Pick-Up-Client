@@ -10,17 +10,12 @@ const Heading = styled.h1`
     color: #FF934F;
 `
 
-const Center = styled.div`
-   
-`
-
 const Input = styled.input`
     border: 1px solid #5A2328;
     background-color: #f0efeb;
     height: 5vh;
     width: 40vw;
     margin-bottom: 4vh;
-   
     
 `
 const Button = styled.button`
@@ -44,6 +39,9 @@ width: 20vw;
 height: 6vh;
 margin-left: 3vw;
 `
+const Center = styled.div`
+
+`
 
 
 
@@ -52,7 +50,7 @@ type ProfileState = {
     games: any[],
     comments: any[],
     id: number,
-    playersNeeded: any //getting type unknown error for some reason in the input onChange, changed to 'any' just to get it functional,
+    playersNeeded: any //getting type unknown error for some reason in the input onChange, changed to 'any' just to get it functional
     editCommentInput: string,
     commentInput: string,
 }
@@ -134,7 +132,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         })
         .then((response) => response.json())
         .then((data) => {
-            
+            console.log(data)
             this.setState({
                 comments: data.userComments
             })
@@ -209,12 +207,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
         })
         .then((response) => response.json())
         .then((data) => {
-            // this.setState({
-            //     newComment: data,
-            //     // comments: data.comments
-            // })
             console.log(data)
-
             this.getComments()
             this.getGames()
 
@@ -296,7 +289,8 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
                                 <div>
                                     <Card body inverse style={{ backgroundColor: '#DFE2CF', maxWidth: '60vw', borderRadius: '5px', border: 'solid 4px #FF934F', marginBottom: '2vh' }}>
                                         <CardTitle tag="h4">You Commented on Game {comment.GameId}...</CardTitle>
-                                        <CardText>{comment.content}</CardText>
+                                        {/* <CardText></CardText> */}
+                                        <CardText>{comment.username}: {comment.content}</CardText>
                                         <CardText>{comment.address}</CardText>
                                         <Input placeholder="Change your comment" type="text" onChange={(e)=>this.setState({editCommentInput: e.target.value})}></Input>      
                                         <Button onClick={()=>this.editComment(comment.id)}>Change</Button> 
