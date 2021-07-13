@@ -5,6 +5,7 @@ import {
     BrowserRouter as Router
 } from 'react-router-dom';
 
+
 type AcceptedProps = {
     updateToken: (newToken: string) => void,
     sessionToken: string | null, 
@@ -24,7 +25,10 @@ const ProtectedViews: React.FunctionComponent<AcceptedProps> = (props) => {
     )
     } else{
         return(
+          
             <Auth updateToken={props.updateToken}/> 
+           
+           
         )
     }
 }

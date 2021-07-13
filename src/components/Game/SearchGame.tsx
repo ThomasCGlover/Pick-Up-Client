@@ -34,6 +34,18 @@ const Button = styled.button`
     margin-top: 2px;
     
     `
+
+const CommentButton = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 8vw;
+    height: 6vh;
+    margin-left: 1vw;
+    margin-top: 0px;
+`
 const Label = styled.label`
     color: #FF934F;
     margin-left: 10.5vw;
@@ -41,7 +53,14 @@ const Label = styled.label`
     font-size: 5vh;
 
 `
-
+const Input = styled.input`
+    border: 1px solid #5A2328;
+    background-color: #f0efeb;
+    height: 5vh;
+    width: 40vw;
+    margin-bottom: 4vh;
+    
+`
 const Column = styled.div`
     display: flex;
     flex-direction: column;
@@ -224,22 +243,16 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                         {games.map(game => (
                             <div className="game" key={game.id}>
                                 <div>
-                                    <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
-                                        <CardTitle tag="h2">Game {game.id}</CardTitle>
-                                        <CardText tag="h4">{game.date}</CardText>
+                                <Card body inverse style={{ backgroundColor: '#DFE2CF', maxWidth: '60vw', borderRadius: '5px', border: 'solid 4px #FF934F', marginBottom: '2vh'}}>
+                                        <CardTitle tag="h2" style={{color: '#3D0814', fontSize: '6vh'}}>Game {game.id}</CardTitle>
+                                        <CardText tag="h4" style={{color: '#3D0814', fontSize: '3vh'}} >{game.date}</CardText>
                                         <CardText>{game.time}</CardText>
                                         <CardText>{game.address}</CardText>
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
-                                        {/* <CardText>{game.comments}</CardText> */}
-                                        {/* <Switch>
-                                        <Route exact path='/comments'><CommentDisplay comments={game.comments}/></Route>
-                                        </Switch> */}
                                         <CommentDisplay comments={game.comments}/>
-                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
-                                        {/* <Link to='/comments'> */}
-                                        <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
-                                        {/* </Link> */}
+                                        <Input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
+                                        <CommentButton onClick={()=>this.addComment(game.id)}>Submit</CommentButton>
                                     
                                     </Card>
                                 </div>
@@ -248,11 +261,6 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                         
                     </div>
                 )} 
-                {/* {games.length === 0 && (
-                    <div>
-                        <p>Sorry, there have been no games created yet in your city! Go to Create Game and be the first!</p>
-                    </div>
-                )} */}
             </>
         )
     }

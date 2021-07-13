@@ -38,13 +38,11 @@ type AcceptedProps = {
 
 const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
     console.log(props.sessionToken)
-    const displayedName = localStorage.getItem('username')
     return(
         
         <div className='sidebar'>
             <div className='sidebar-list-styling'>
                 <ul className='sidebar-list'>
-                    <Li>{displayedName}</Li>
                     <Li><Link to='/creategame'>Create Game</Link></Li>
                     <Li><Link to='/searchgames'>Search for Games</Link></Li>
                     <Li><Link to='/profile'>User Profile</Link></Li>

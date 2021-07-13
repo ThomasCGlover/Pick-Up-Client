@@ -11,12 +11,11 @@ const CreateTitle = styled.h1`
 `
 const Center = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 `
 const InputDiv = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 18vw;
     padding-right: 15vw;
     margin-bottom: 3vh;
@@ -24,6 +23,8 @@ const InputDiv = styled.div`
 
 const Input = styled.input`
     background-color: #DFE2CF;
+    height: 5vh;
+   
     
 `
 
@@ -39,7 +40,7 @@ const Button = styled.button`
         color: white;
     }
     width: 60vw;
-    height: 5vh;
+    height: 7vh;
 `
 const Para = styled.p`
     color: #DFE2CF;
@@ -80,7 +81,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
             playersNeeded: 0,
             time: '',
             date: '',
-            skillPref: '',
+            skillPref: 'Casual',
             message: false,
         
 
@@ -112,7 +113,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
     }
 
 
-    //created these three functions because Typescript is not recognizing the dropdown values as string
+    //created these three functions because Typescript is not recognizing the dropdown values as string in my onChange functions
     handleCityInput(e: any) {
         this.setState({
             city: e.target.value
