@@ -158,7 +158,7 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
 
     addComment = (GameId: number) => {
         const commUsername = localStorage.getItem('username');
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
+        fetch(`${APIURL}/comment/add/${GameId}`, {
             method: 'POST',
             body: JSON.stringify({content: this.state.commentInput}),
             headers: new Headers({
@@ -237,7 +237,6 @@ export default class UserProfile extends Component<AcceptedProps, ProfileState>{
     
     // Styling the material UI components was very tricky, I decided to use in-line styling despite the time it might have wasted
     render(){
-        const {games} = this.state;
         return(
             <div>
                 <Heading>Your Games:</Heading>
