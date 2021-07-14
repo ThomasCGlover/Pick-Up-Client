@@ -146,6 +146,7 @@ export default class CreateGame extends Component<AcceptedProps, GameState>{
                     {/* <Column> */}
                     <Label>City</Label>
                         <Select onChange={this.handleCityInput.bind(this)}>
+                            <option value=''></option>
                             <option value='Anderson'>Anderson</option>
                             <option value='Bloomington'>Bloomington</option>
                             <option value='Carmel'>Carmel</option>
