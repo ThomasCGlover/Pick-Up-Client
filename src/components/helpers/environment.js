@@ -1,5 +1,5 @@
-// let APIURL = 'https://tcg-pickup-server.herokuapp.com';
-let APIURL = 'http://localhost:3005';
+let APIURL = 'https://tcg-pickup-server.herokuapp.com';
+// let APIURL = 'http://localhost:3005';
 // switch (window.location.hostname) {
 //     // this is the local host name of your react app
 //     case 'localhost' || '127.0.0.1':
