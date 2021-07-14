@@ -79,6 +79,7 @@ type GameState = {
     comments: any[],
     commentInput: string,
     GameId: number,
+    noGames: boolean,
     // newComment: string,
     
 }
@@ -100,6 +101,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             comments: [],
             commentInput: '',
             GameId: 0,
+            noGames: false,
             // newComment: ''
             
         }
@@ -117,8 +119,9 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
         .then((data) => {
             this.setState({
                 games: data,
-                // comments: data.comments
+                
             })
+            
 
         })
     }
@@ -259,7 +262,7 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                         ))}
                         
                     </div>
-                )} 
+                )}
             </>
         )
     }

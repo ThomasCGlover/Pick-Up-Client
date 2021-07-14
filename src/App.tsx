@@ -8,7 +8,6 @@ import {
 import ProtectedViews from './components/Auth/ProtectedViews';
 import hoop from './assets/hoop.png'
 import { render } from '@testing-library/react';
-import AdminDelete from './components/Auth/AdminDelete';
 import Net from './assets/net.png';
 
 
@@ -28,7 +27,7 @@ class App extends Component <Props, AppState>{
         username: ''
       }
       this.updateToken = this.updateToken.bind(this);
-      // this.viewConductor = this.viewConductor.bind(this);
+
   }
 
   componentDidMount(){
@@ -51,12 +50,6 @@ class App extends Component <Props, AppState>{
     }, () => console.log(this.state.sessionToken))
   }
 
-
-
-  // viewConductor = () => {
-  //   return this.state.sessionToken === localStorage.getItem('token') ? <Router >
-  //   <SideNav sessionToken={this.state.sessionToken} updateToken={this.updateToken} /> </Router> : <Auth updateToken={this.updateToken}/>  
-  // }
   
 
   render(){

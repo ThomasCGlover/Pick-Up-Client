@@ -91,8 +91,8 @@ export default class Register extends Component<AcceptedProps, RegisterState>{
                 <MainDiv>
                 <form>
                     <h1>First Time? Register Here</h1>
-                    <Input placeholder="Username" type="text" onChange={(this.handleUsernameInput.bind(this))} />
-                    <Input placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
+                    <Input required min='5' max="12" placeholder="Username" type="text" onChange={(this.handleUsernameInput.bind(this))} />
+                    <Input required placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
                     <Button onClick={this.handlesubmit.bind(this)}>Submit</Button>
                 </form>
                 </MainDiv>

@@ -7,7 +7,7 @@ import{
 import CreateGame from '../Game/CreateGame';
 import SearchGame from '../Game/SearchGame';
 import UserProfile from '../Profile/UserProfile';
-import AdminDelete from '../Auth/AdminDelete';
+import AdminDelete from '../Auth/Admin';
 import styled from 'styled-components';
 
 
