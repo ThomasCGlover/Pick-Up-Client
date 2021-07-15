@@ -8,13 +8,14 @@ import {
 import ProtectedViews from './components/Auth/ProtectedViews';
 import hoop from './assets/hoop.png'
 import { render } from '@testing-library/react';
-import AdminDelete from './components/Auth/AdminDelete';
+import Net from './assets/net.png';
 
 
 
 type Props = {}
 type AppState = {
   sessionToken: string | null,
+  username: string | null | undefined
   
 }
 
@@ -22,10 +23,11 @@ class App extends Component <Props, AppState>{
     constructor(props: Props){
       super(props);
       this.state = {
-        sessionToken: ''
+        sessionToken: '',
+        username: ''
       }
       this.updateToken = this.updateToken.bind(this);
-      // this.viewConductor = this.viewConductor.bind(this);
+
   }
 
   componentDidMount(){
@@ -48,18 +50,15 @@ class App extends Component <Props, AppState>{
     }, () => console.log(this.state.sessionToken))
   }
 
-
-
-  // viewConductor = () => {
-  //   return this.state.sessionToken === localStorage.getItem('token') ? <Router >
-  //   <SideNav sessionToken={this.state.sessionToken} updateToken={this.updateToken} /> </Router> : <Auth updateToken={this.updateToken}/>  
-  // }
   
 
   render(){
   return (
     <div className="App">
+      <div className="title-div">
       <h1 className="title">Pick-Up Finder</h1>
+      <img src={Net} alt="net" />
+      </div>
       <ProtectedViews updateToken = {this.updateToken} sessionToken={this.state.sessionToken} clearToken={this.clearToken}/>
     </div>
   );

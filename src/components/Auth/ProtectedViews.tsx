@@ -3,7 +3,8 @@ import SideNav from '../Site/SideNav';
 import Auth from './Auth';
 import {
     BrowserRouter as Router
-  } from 'react-router-dom';
+} from 'react-router-dom';
+
 
 type AcceptedProps = {
     updateToken: (newToken: string) => void,
@@ -24,7 +25,10 @@ const ProtectedViews: React.FunctionComponent<AcceptedProps> = (props) => {
     )
     } else{
         return(
+          
             <Auth updateToken={props.updateToken}/> 
+           
+           
         )
     }
 }

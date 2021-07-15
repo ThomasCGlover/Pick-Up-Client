@@ -1,6 +1,33 @@
 import React, {Component} from 'react';
-import {Form, Input, Label, Button} from 'reactstrap';
+import {Form,} from 'reactstrap';
 import APIURL from '../helpers/environment';
+import styled from 'styled-components';
+
+const Paragraph = styled.p`
+    color: #DFE2CF;
+`
+
+const Button = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 15vw;
+    height: 8vh;
+    margin-left: 12vw;
+    margin-top: 2px;
+    
+    `
+
+const Label = styled.label`
+    color: #DFE2CF;
+`
+const Input = styled.input`
+    background-color: #DFE2CF;
+`
+    
+
 
 type AdminData = {
     userId: number,
@@ -35,6 +62,7 @@ export default class AdminDelete extends Component<AcceptedProps, AdminData> {
         
     }
     render() {
+        if(localStorage.getItem('role') == 'admin'){
         return(
             <div className='main'>
                 <div className='mainDiv'>
@@ -47,5 +75,13 @@ export default class AdminDelete extends Component<AcceptedProps, AdminData> {
                 </div>
             </div>
         )
+        }
+        else{
+            return(
+                <div>
+                    <Paragraph>You are not authorized to view this!</Paragraph>
+                </div>
+            )
+        }
     }
 }

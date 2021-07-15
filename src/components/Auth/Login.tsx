@@ -9,8 +9,6 @@ const Wrapper = styled.div`
     max-width: 95vw;
     color: #FF934F;
     
-    
-
 `
 
 const MainDiv = styled.div`
@@ -50,8 +48,8 @@ const Input = styled.input`
 
 
 type LoginState = {
-    username: string,
-    password: string,
+    username: string | null,
+    password: string | null,
     role: string,
     
 
@@ -64,8 +62,8 @@ export default class Login extends Component<AcceptedProps, LoginState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
-            username: '',
-            password: '',
+            username: null,
+            password: null,
             role: '',
             
             
@@ -82,10 +80,10 @@ export default class Login extends Component<AcceptedProps, LoginState>{
         })
         .then((response) => response.json())
         .then((data) => {
+            console.log(data)
             this.props.updateToken(data.sessionToken)
-            // this.setState({
-            //     // role: data.user.role
-            // })
+            localStorage.setItem('username', data.user.username)
+            localStorage.setItem('role', data.user.role)
         })
     }
 
@@ -112,8 +110,8 @@ export default class Login extends Component<AcceptedProps, LoginState>{
             </TextWrapper>
                 <MainDiv>
                     <form>
-                        <Input placeholder="Username" type="text" onChange={this.handleUsernameInput.bind(this)} />
-                        <Input placeholder="Password" type="password" onChange={this.handlePasswordInput.bind(this)} />
+                        <Input required placeholder="Username" type="text" onChange={this.handleUsernameInput.bind(this)} />
+                        <Input required placeholder="Password" type="password" onChange={this.handlePasswordInput.bind(this)} />
                         <Button onClick={this.handlesubmit.bind(this)}>Submit</Button>
                     </form>
                 </MainDiv>

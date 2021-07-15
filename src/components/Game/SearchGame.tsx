@@ -1,8 +1,72 @@
 import React, {Component} from 'react';
-import { Select, InputLabel, MenuItem} from '@material-ui/core';
-import { Card, Button, CardTitle, CardText } from 'reactstrap';
+// import { Select, InputLabel} from '@material-ui/core';
+import { Card, CardTitle, CardText } from 'reactstrap';
 import CommentDisplay from './CommentDisplay';
 import APIURL from '../helpers/environment';
+import styled from 'styled-components';
+import{
+    Route, 
+    Link, 
+    Switch
+} from 'react-router-dom';
+
+const Heading = styled.h1`
+    color: #DFE2CF;
+    font-size: 7vh;
+`
+const Select = styled.select`
+    background-color: #DFE2CF;
+    width: 10vw;
+    height: 5vh;
+    font-size: 3vh;
+    margin-left: 14.5vw;
+`
+
+const Button = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 15vw;
+    height: 8vh;
+    margin-left: 12vw;
+    margin-top: 2px;
+    
+    `
+
+const CommentButton = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 8vw;
+    height: 6vh;
+    margin-left: 1vw;
+    margin-top: 0px;
+`
+const Label = styled.label`
+    color: #FF934F;
+    margin-left: 10.5vw;
+    margin-bottom: 1vh;
+    font-size: 5vh;
+
+`
+const Input = styled.input`
+    border: 1px solid #5A2328;
+    background-color: #f0efeb;
+    height: 5vh;
+    width: 40vw;
+    margin-bottom: 4vh;
+    
+`
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 90vw;
+`
+
 
 type GameState = {
     city: string,
@@ -15,6 +79,7 @@ type GameState = {
     comments: any[],
     commentInput: string,
     GameId: number,
+    noGames: boolean,
     // newComment: string,
     
 }
@@ -36,12 +101,32 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
             comments: [],
             commentInput: '',
             GameId: 0,
+            noGames: false,
             // newComment: ''
             
         }
     }
     handlesubmit = (e:any) => {
         e.preventDefault();
+        fetch(`${APIURL}/game/search/${this.state.city}`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({
+                games: data,
+                
+            })
+            
+
+        })
+    }
+
+    fetchGames = () => {
         fetch(`${APIURL}/game/search/${this.state.city}`, {
             method: 'GET',
             headers: new Headers({
@@ -60,9 +145,10 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
 
 
     addComment = (GameId: number) => {
-        fetch(`http://tcg-pickup-server.herokuapp.com/comment/add/${GameId}`, {
+        
+        fetch(`${APIURL}/comment/add/${GameId}`, {
             method: 'POST',
-            body: JSON.stringify({content: this.state.commentInput}),
+            body: JSON.stringify({content: this.state.commentInput}), //username: displayedName
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token
@@ -74,6 +160,8 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
                 commentInput: ''
             })
             console.log(data)
+            this.fetchGames();
+            
         })
     }
 
@@ -95,86 +183,86 @@ export default class SearchGame extends Component<AcceptedProps, GameState>{
         console.log(this.state.games)
         const { games } = this.state;
         // const { comments } = this.state;
+
         
         return(
             <>
                 <form>
-                    <h1>Search for a game near you!</h1>
-                    <InputLabel>Choose your city</InputLabel>
+                    <Heading>Search for Pick-Up Game by City!</Heading>
+                    
+                    <Column>
+                    
+                    <Label>Choose your city</Label>
                         <Select onChange={this.handleCityInput.bind(this)}>
-                            <MenuItem value='Anderson'>Anderson</MenuItem>
-                            <MenuItem value='Bloomington'>Bloomington</MenuItem>
-                            <MenuItem value='Carmel'>Carmel</MenuItem>
-                            <MenuItem value='Columbus'>Columbus</MenuItem>
-                            <MenuItem value='Crown Point'>Crown Point</MenuItem>
-                            <MenuItem value='East Chicago'>East Chicago</MenuItem>
-                            <MenuItem value='Elkhart'>Elkhart</MenuItem>
-                            <MenuItem value='Evansville'>Evansville</MenuItem>
-                            <MenuItem value='Fishers'>Fishers</MenuItem>
-                            <MenuItem value='Fort Wayne'>Fort Wayne</MenuItem>
-                            <MenuItem value='Franklin'>Franklin</MenuItem>
-                            <MenuItem value='Gary'>Gary</MenuItem>
-                            <MenuItem value='Goshen'>Goshen</MenuItem>
-                            <MenuItem value='Greenfield'>Greenfield</MenuItem>
-                            <MenuItem value='Greenwood'>Greenwood</MenuItem>
-                            <MenuItem value='Hammond'>Hammond</MenuItem>
-                            <MenuItem value='Hobart'>Hobart</MenuItem>
-                            <MenuItem value='Indianapolis'>Indianapolis</MenuItem>
-                            <MenuItem value='Jeffersonville'>Jeffersonville</MenuItem>
-                            <MenuItem value='Kokomo'>Kokomo</MenuItem>
-                            <MenuItem value='Lafayette'>Lafayette</MenuItem>
-                            <MenuItem value='La Porte'>La Porte</MenuItem>
-                            <MenuItem value='Lawrence'>Lawrence</MenuItem>
-                            <MenuItem value='Logansport'>Logansport</MenuItem>
-                            <MenuItem value='Marion'>Marion</MenuItem>
-                            <MenuItem value='Michigan City'>Michigan City</MenuItem>
-                            <MenuItem value='Mishawaka'>Mishawaka</MenuItem>
-                            <MenuItem value='Muncie'>Muncie</MenuItem>
-                            <MenuItem value='New Albany'>New Albany</MenuItem>
-                            <MenuItem value='Noblesville'>Noblesville</MenuItem>
-                            <MenuItem value='Portage'>Portage</MenuItem>
-                            <MenuItem value='Richmond'>Richmond</MenuItem>
-                            <MenuItem value='Seymour'>Seymour</MenuItem>
-                            <MenuItem value='Shelbyville'>Shelbyville</MenuItem>
-                            <MenuItem value='South Bend'>South Bend</MenuItem>
-                            <MenuItem value='Terre Haute'>Terre Haute</MenuItem>
-                            <MenuItem value='Valparaiso'>Valparaiso</MenuItem>
-                            <MenuItem value='Vincennes'>Vincennes</MenuItem>
-                            <MenuItem value='Westfield'>Westfield</MenuItem>
-                            <MenuItem value='West Lafayette'>West Lafayette</MenuItem>
+                            <option value='Anderson'>Anderson</option>
+                            <option value='Bloomington'>Bloomington</option>
+                            <option value='Carmel'>Carmel</option>
+                            <option value='Columbus'>Columbus</option>
+                            <option value='Crown Point'>Crown Point</option>
+                            <option value='East Chicago'>East Chicago</option>
+                            <option value='Elkhart'>Elkhart</option>
+                            <option value='Evansville'>Evansville</option>
+                            <option value='Fishers'>Fishers</option>
+                            <option value='Fort Wayne'>Fort Wayne</option>
+                            <option value='Franklin'>Franklin</option>
+                            <option value='Gary'>Gary</option>
+                            <option value='Goshen'>Goshen</option>
+                            <option value='Greenfield'>Greenfield</option>
+                            <option value='Greenwood'>Greenwood</option>
+                            <option value='Hammond'>Hammond</option>
+                            <option value='Hobart'>Hobart</option>
+                            <option value='Indianapolis'>Indianapolis</option>
+                            <option value='Jeffersonville'>Jeffersonville</option>
+                            <option value='Kokomo'>Kokomo</option>
+                            <option value='Lafayette'>Lafayette</option>
+                            <option value='La Porte'>La Porte</option>
+                            <option value='Lawrence'>Lawrence</option>
+                            <option value='Logansport'>Logansport</option>
+                            <option value='Marion'>Marion</option>
+                            <option value='Michigan City'>Michigan City</option>
+                            <option value='Mishawaka'>Mishawaka</option>
+                            <option value='Muncie'>Muncie</option>
+                            <option value='New Albany'>New Albany</option>
+                            <option value='Noblesville'>Noblesville</option>
+                            <option value='Portage'>Portage</option>
+                            <option value='Richmond'>Richmond</option>
+                            <option value='Seymour'>Seymour</option>
+                            <option value='Shelbyville'>Shelbyville</option>
+                            <option value='South Bend'>South Bend</option>
+                            <option value='Terre Haute'>Terre Haute</option>
+                            <option value='Valparaiso'>Valparaiso</option>
+                            <option value='Vincennes'>Vincennes</option>
+                            <option value='Westfield'>Westfield</option>
+                            <option value='West Lafayette'>West Lafayette</option>
                         </Select>
-                    <button onClick={this.handlesubmit.bind(this)}>Submit</button>
+                        
+                        </Column>
+                    <Button onClick={this.handlesubmit.bind(this)}>SEARCH</Button>
                 </form>
 
                 {games.length > 0 && (
                     <div className="games-container">
-                        
                         {games.map(game => (
                             <div className="game" key={game.id}>
                                 <div>
-                                    <Card body inverse style={{ backgroundColor: '#E5E9EC', borderColor: '#333' }}>
-                                        <CardTitle tag="h2">Game {game.id}</CardTitle>
-                                        <CardText tag="h4">{game.date}</CardText>
+                                <Card body inverse style={{ backgroundColor: '#DFE2CF', maxWidth: '60vw', borderRadius: '5px', border: 'solid 4px #FF934F', marginBottom: '2vh'}}>
+                                        <CardTitle tag="h2" style={{color: '#3D0814', fontSize: '6vh'}}>Game {game.id}</CardTitle>
+                                        <CardText tag="h4" style={{color: '#3D0814', fontSize: '3vh'}} >{game.date}</CardText>
                                         <CardText>{game.time}</CardText>
                                         <CardText>{game.address}</CardText>
                                         <CardText>Players Needed: {game.playersNeeded}</CardText>
                                         <CardText>Skill Preference: {game.skillPref}</CardText> 
-                                        {/* <CardText>{game.comments}</CardText> */}
                                         <CommentDisplay comments={game.comments}/>
-                                        <input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
-                                        <Button onClick={()=>this.addComment(game.id)}>Submit</Button>
+                                        <Input onChange={this.commentInput.bind(this)} type="text" placeholder="Add Comment" value={this.state.commentInput} />
+                                        <CommentButton onClick={()=>this.addComment(game.id)}>Submit</CommentButton>
+                                    
                                     </Card>
                                 </div>
                             </div>
                         ))}
                         
                     </div>
-                )} 
-                {/* {games.length === 0 && (
-                    <div>
-                        <p>Sorry, there have been no games created yet in your city! Go to Create Game and be the first!</p>
-                    </div>
-                )} */}
+                )}
             </>
         )
     }

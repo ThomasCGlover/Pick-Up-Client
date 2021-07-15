@@ -4,13 +4,31 @@ import{
     Link, 
     Switch
 } from 'react-router-dom';
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
 import CreateGame from '../Game/CreateGame';
 import SearchGame from '../Game/SearchGame';
 import UserProfile from '../Profile/UserProfile';
-import AdminDelete from '../Auth/AdminDelete';
+import AdminDelete from '../Auth/Admin';
+import styled from 'styled-components';
 
+
+
+const Button = styled.button`
+    border-radius: 8px;
+    background-color: #FF934F;
+    :hover{
+        color: white;
+    }
+    width: 12vw;
+    height: 5vh;
+`
+const AdminLi = styled.li`
+    margin-top: 50vh;
+`
+
+const Li = styled.li`
+    margin-top: 4vh;
+    
+`
 
 type AcceptedProps = {
     // updateToken: (newToken: string) => void,
@@ -21,15 +39,15 @@ type AcceptedProps = {
 const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
     console.log(props.sessionToken)
     return(
+        
         <div className='sidebar'>
             <div className='sidebar-list-styling'>
-                <ul className='sidebar-list list-unstyled'>
-                    <li><Link to='/creategame'>Create Game</Link></li>
-                    <li><Link to='/searchgames'>Search for Games</Link></li>
-                    <li><Link to='/profile'>Your Profile</Link></li>
-                    {/* <li><Link to='/logout'><button onClick={props.clearToken} >Logout</button></Link></li> */}
-                    <button onClick={props.clearToken} >Logout</button>
-                    <li><Link to='/admin'>admin</Link></li>
+                <ul className='sidebar-list'>
+                    <Li><Link to='/creategame'>Create Game</Link></Li>
+                    <Li><Link to='/searchgames'>Search for Games</Link></Li>
+                    <Li><Link to='/profile'>User Profile</Link></Li>
+                    <Li><Button onClick={props.clearToken} >Logout</Button></Li>
+                    <AdminLi><Link to='/admin'>*</Link></AdminLi>
 
                 </ul>
             </div>
@@ -37,7 +55,7 @@ const SideNav: React.FunctionComponent<AcceptedProps> = (props) => {
                 <Switch>
                     <Route exact path='/creategame'><CreateGame sessionToken={props.sessionToken}/></Route>
                     <Route exact path='/searchgames'><SearchGame sessionToken={props.sessionToken} /></Route>
-                    <Route exact path='/profile'><UserProfile sessionToken={props.sessionToken}/></Route>  
+                    <Route exact path='/profile'><UserProfile sessionToken={props.sessionToken}/></Route> 
                     <Route exact path='/admin'><AdminDelete sessionToken={props.sessionToken}/></Route>
                 </Switch>
             </div>

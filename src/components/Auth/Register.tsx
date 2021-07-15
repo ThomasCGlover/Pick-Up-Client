@@ -64,6 +64,8 @@ export default class Register extends Component<AcceptedProps, RegisterState>{
         .then((response) => response.json())
         .then((data) => {
             this.props.updateToken(data.sessionToken)
+            localStorage.setItem('username', data.user.username)
+            localStorage.setItem('role', data.user.role)
             console.log(data)
         })
     }
@@ -89,8 +91,8 @@ export default class Register extends Component<AcceptedProps, RegisterState>{
                 <MainDiv>
                 <form>
                     <h1>First Time? Register Here</h1>
-                    <Input placeholder="Username" type="text" onChange={(this.handleUsernameInput.bind(this))} />
-                    <Input placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
+                    <Input required min='5' max="12" placeholder="Username" type="text" onChange={(this.handleUsernameInput.bind(this))} />
+                    <Input required placeholder="Password" type="text" onChange={this.handlePasswordInput.bind(this)} />
                     <Button onClick={this.handlesubmit.bind(this)}>Submit</Button>
                 </form>
                 </MainDiv>
