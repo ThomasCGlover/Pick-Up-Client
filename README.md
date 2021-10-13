@@ -8,7 +8,7 @@
                                 games and comments and edit/delete both. 
 
 
-                                Deployed link: http://tcg-pickup-server.herokuapp.com/
+                                Deployed link: http://tcg-pickup-client.herokuapp.com/
 
                                 The app utilizes Javascript, Typescript, Sequelize, Material UI, and Styled-Components.
 
